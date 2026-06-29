@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# Logs and outputs
+error_log.txt
+output.txt
+temp_resp.txt
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Project specific backups
+stable_backup/
+sample_proposals/

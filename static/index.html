@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareWise AI - Procurement Intelligence</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header class="glass-header">
+        <div class="logo">CompareWise <span>AI</span></div>
+        <nav>
+            <a href="#" id="nav-dashboard" class="active">Dashboard</a>
+            <a href="#" id="nav-recommended">Recommended Vendors</a>
+            <button id="theme-toggle" class="theme-btn" title="Toggle Light/Dark Mode">☀️ Light Mode</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Dashboard View -->
+        <div id="dashboard-view">
+            <section class="hero-section text-center">
+                <h1>Vendor Proposal Intelligence</h1>
+                <p>Upload vendor proposals to automatically extract key fields, analyze risk clauses, and generate side-by-side executive comparisons in seconds.</p>
+            </section>
+
+
+        <section id="upload-section" class="upload-container glass-panel">
+            <div id="drop-zone" class="drop-zone">
+                <div class="upload-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                </div>
+                <h3>Drag & Drop Proposals</h3>
+                <p>or click to browse files (PDF, DOCX, XLSX)</p>
+                <input type="file" id="file-input" multiple accept=".pdf,.docx,.xlsx" hidden>
+                <button id="browse-btn" class="btn-primary">Browse Files</button>
+            </div>
+            
+            <div id="file-list" class="file-list"></div>
+            
+            <div class="actions">
+                <button id="compare-btn" class="btn-primary btn-large" disabled>Generate Comparison</button>
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <section id="loading-section" class="loading-container glass-panel hidden">
+            <div class="spinner"></div>
+            <h3 id="loading-text">Starting analysis...</h3>
+            <div class="progress-bar-container">
+                <div id="progress-bar-fill" class="progress-bar-fill"></div>
+            </div>
+            <p id="loading-subtext" style="font-weight: bold; font-size: 1.2rem; color: var(--primary); margin-top: 10px;">0%</p>
+        </section>
+
+        <!-- Results View -->
+        <section id="results-section" class="results-container hidden">
+            <!-- Executive Summary -->
+            <div class="executive-summary glass-panel">
+                <h2>Executive Summary</h2>
+                <div class="summary-content" id="exec-summary-content"></div>
+                
+                <div class="recommendation-box">
+                    <h3>💡 AI Recommendation</h3>
+                    <p id="recommendation-content"></p>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="comparison-table-wrapper glass-panel">
+                <h2>Side-by-Side Comparison</h2>
+                <div class="table-responsive">
+                    <table id="comparison-table">
+                        <thead>
+                            <tr id="table-headers">
+                                <th>Criteria</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Rows dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pros/Cons and Risks -->
+            <div class="details-grid" id="details-grid">
+                <!-- Dynamically populated vendor details -->
+            </div>
+            
+            <div class="action-footer">
+                <button id="reset-btn" class="btn-secondary">Start New Comparison</button>
+            </div>
+        </section>
+        </div>
+        
+        <!-- Recommended Vendors View -->
+        <div id="recommended-view" class="hidden">
+            <section id="recommendations-section" class="recommendations-container glass-panel">
+                <h2>🏆 Top Recommended Vendors</h2>
+                <p class="subtitle">Best-in-class proposals across our curated categories to jumpstart your comparison.</p>
+                <div class="vendor-cards-grid">
+                    <div class="vendor-rec-card">
+                        <div class="vendor-rec-icon">🎭</div>
+                        <div class="vendor-rec-info">
+                            <span class="vendor-category">Stage</span>
+                            <h4 class="vendor-name">NovaStage Productions</h4>
+                        </div>
+                        <div class="vendor-rec-actions">
+                            <a href="/static/best_proposals/NovaStage_Productions.pdf" target="_blank" class="btn-text">View</a>
+                            <button class="btn-sm add-pdf-btn" data-url="/static/best_proposals/NovaStage_Productions.pdf" data-name="NovaStage_Productions.pdf">+ Add</button>
+                        </div>
+                    </div>
+                    <div class="vendor-rec-card">
+                        <div class="vendor-rec-icon">🌸</div>
+                        <div class="vendor-rec-info">
+                            <span class="vendor-category">Decor</span>
+                            <h4 class="vendor-name">BlissDecor Creations</h4>
+                        </div>
+                        <div class="vendor-rec-actions">
+                            <a href="/static/best_proposals/BlissDecor_Creations.pdf" target="_blank" class="btn-text">View</a>
+                            <button class="btn-sm add-pdf-btn" data-url="/static/best_proposals/BlissDecor_Creations.pdf" data-name="BlissDecor_Creations.pdf">+ Add</button>
+                        </div>
+                    </div>
+                    <div class="vendor-rec-card">
+                        <div class="vendor-rec-icon">⛺</div>
+                        <div class="vendor-rec-info">
+                            <span class="vendor-category">Tent</span>
+                            <h4 class="vendor-name">SafeShade Structures</h4>
+                        </div>
+                        <div class="vendor-rec-actions">
+                            <a href="/static/best_proposals/SafeShade_Structures.pdf" target="_blank" class="btn-text">View</a>
+                            <button class="btn-sm add-pdf-btn" data-url="/static/best_proposals/SafeShade_Structures.pdf" data-name="SafeShade_Structures.pdf">+ Add</button>
+                        </div>
+                    </div>
+                    <div class="vendor-rec-card">
+                        <div class="vendor-rec-icon">🍽️</div>
+                        <div class="vendor-rec-info">
+                            <span class="vendor-category">Food</span>
+                            <h4 class="vendor-name">UrbanTaste Catering</h4>
+                        </div>
+                        <div class="vendor-rec-actions">
+                            <a href="/static/best_proposals/UrbanTaste_Catering.pdf" target="_blank" class="btn-text">View</a>
+                            <button class="btn-sm add-pdf-btn" data-url="/static/best_proposals/UrbanTaste_Catering.pdf" data-name="UrbanTaste_Catering.pdf">+ Add</button>
+                        </div>
+                    </div>
+                    <div class="vendor-rec-card">
+                        <div class="vendor-rec-icon">📸</div>
+                        <div class="vendor-rec-info">
+                            <span class="vendor-category">Photography</span>
+                            <h4 class="vendor-name">VisionCraft Studios</h4>
+                        </div>
+                        <div class="vendor-rec-actions">
+                            <a href="/static/best_proposals/VisionCraft_Studios.pdf" target="_blank" class="btn-text">View</a>
+                            <button class="btn-sm add-pdf-btn" data-url="/static/best_proposals/VisionCraft_Studios.pdf" data-name="VisionCraft_Studios.pdf">+ Add</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
